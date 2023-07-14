@@ -1,0 +1,18 @@
+.spinner {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+.spinner div {
+  background: var(--color-paisanos);
+  border-radius: 30px;
+  width: 100px;
+  height: 100px;
+}
+
+.logo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

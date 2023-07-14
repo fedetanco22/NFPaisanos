@@ -1,0 +1,48 @@
+.button {
+  cursor: pointer;
+  height: 40px;
+  padding: 0 13px;
+  border-radius: 90px;
+  border: 2px;
+  gap: 12px;
+  color: var(--color-white);
+  font-weight: 700;
+}
+
+.sm {
+  width: 137px;
+}
+.md {
+  width: 200px;
+}
+
+.lg {
+  width: 352px;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.primary {
+  background-color: var(--color-primary);
+}
+.secondary {
+  background-color: var(--color-secondary);
+}
+.outline {
+  background-color: transparent;
+  border: 2px solid var(--color-gray);
+}
+
+.link {
+  background: none;
+  border: none;
+  width: auto;
+  padding: 0;
+  color: var(--color-gray);
+}
+
+.link:hover {
+  color: var(--color-white);
+}

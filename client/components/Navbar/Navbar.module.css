@@ -1,0 +1,33 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 0;
+}
+
+.linkList {
+  flex-grow: 2;
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+
+.logo {
+  padding-right: 2rem;
+  border-right: 2px solid var(--color-gray-light);
+}
+
+.link {
+  padding: 0 1rem;
+  margin-left: 1rem;
+  color: var(--color-gray);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+
+.button {
+  margin-left: 1rem;
+}
