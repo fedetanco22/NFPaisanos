@@ -1,7 +1,9 @@
 .spinner {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin: 2rem 0;
+  height: 80vh;
 }
 .spinner div {
   background: var(--color-paisanos);

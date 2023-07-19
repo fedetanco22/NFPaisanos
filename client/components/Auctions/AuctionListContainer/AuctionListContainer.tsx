@@ -1,29 +1,52 @@
 import React, { useEffect, useState } from 'react'
+import Image from 'next/image'
 import debounce from 'lodash.debounce'
 
 import AuctionList from '../AuctionList/AuctionList'
 import PriceRangeSlider from '../Filters/PriceRangeSlider/PriceRangeSlider'
 import SelectInput from '../Filters/SelectInput/SelectInput'
+import Button from '../../Button/Button'
+import HorizontalFilters from '../Filters/HorizontalFilters/HorizontalFilters'
 
 import styles from './AuctionListContainer.module.css'
 
+import NFPaisanos from '@/types/NFPaisanos'
 import SearchInput from '@/client/components/SearchInput/SearchInput'
 import { getAuctions } from '@/server/api/services'
 import {
   useAppContextState,
   useSetFilteredDataContext,
 } from '@/client/utils/context/useAppContext'
-import NFPaisanos from '@/types/NFPaisanos'
+import XSVG from '@/public/icons/x.svg'
 
 const orderByOptions = [
   { value: 'newest', label: 'Newest' },
   { value: 'oldest', label: 'Oldest' },
 ]
 
+const mostLikedOptions = [
+  { value: 'mostLiked', label: 'Most liked' },
+  { value: 'lessLiked', label: 'Less liked' },
+]
+
+const colorsOptions = [
+  { value: 'all', label: 'All colors', color: 'transparent' },
+  { value: 'black', label: 'Black', color: 'black' },
+  { value: 'green', label: 'Green', color: 'green' },
+  { value: 'pink', label: 'Pink', color: 'pink' },
+  { value: 'purple', label: 'Purple', color: 'purple' },
+]
+
 const AuctionListContainer = (): JSX.Element => {
   const [auctions, setAuctions] = useState<NFPaisanos[]>([])
-  const { priceRange, filterByOrder } = useAppContextState()
-  const { setPriceRange, setFilterByOrder } = useSetFilteredDataContext()
+  const { priceRange, filterByOrder, filterByLikes, filterByColors } =
+    useAppContextState()
+  const {
+    setPriceRange,
+    setFilterByOrder,
+    setFilterByLikes,
+    setFilterByColors,
+  } = useSetFilteredDataContext()
   const [filteredAuctions, setFilteredAuctions] = useState<NFPaisanos[]>([])
 
   const fetchData = async (): Promise<void> => {
@@ -35,11 +58,24 @@ const AuctionListContainer = (): JSX.Element => {
     }
   }
 
-  const debouncedFetchData = debounce(fetchData, 300)
+  const debouncedFetchData = debounce(fetchData, 3000)
 
   useEffect(() => {
     debouncedFetchData()
-  }, [priceRange, debouncedFetchData, filterByOrder])
+  }, [
+    priceRange,
+    debouncedFetchData,
+    filterByOrder,
+    filterByLikes,
+    filterByColors,
+  ])
+
+  const handleResetFilters = (): void => {
+    setPriceRange && setPriceRange(10)
+    setFilterByOrder && setFilterByOrder('')
+    setFilterByLikes && setFilterByLikes('')
+    setFilterByColors && setFilterByColors('')
+  }
 
   useEffect(() => {
     const parseEthStringToNumber = (ethString: string): number => {
@@ -70,19 +106,53 @@ const AuctionListContainer = (): JSX.Element => {
 
   return (
     <div className={styles.container}>
-      <>
-        <SearchInput />
+      <SearchInput />
+      <div className={styles.containerWrapper}>
+        <HorizontalFilters />
         <div className={styles.filterContainer}>
           <div className={styles.filters}>
             <SelectInput
               options={orderByOptions}
-              filterByOrder={filterByOrder}
-              setFilterByOrder={setFilterByOrder}
+              filterValue={filterByOrder}
+              setFilter={setFilterByOrder}
+              title={'Order by'}
             />
             <PriceRangeSlider
               priceRange={priceRange}
               setPriceRange={setPriceRange}
             />
+
+            <div className={styles.divider}></div>
+
+            <SelectInput
+              options={mostLikedOptions}
+              filterValue={filterByLikes || ''}
+              setFilter={setFilterByLikes}
+              title={'Likes'}
+              nullOptionLabel={'Sort by likes'}
+            />
+            <SelectInput
+              options={colorsOptions}
+              filterValue={filterByColors || ''}
+              setFilter={setFilterByColors}
+              title={'Colors'}
+              nullOptionLabel={'All Colors'}
+            />
+
+            <div className={styles.divider}></div>
+
+            <div className={styles.resetButton}>
+              <Button
+                variant={'link'}
+                size={'fullWidth'}
+                icon={<Image src={XSVG} alt={'reset-x'} />}
+                onClick={() => {
+                  handleResetFilters()
+                }}
+              >
+                <span>Reset filters</span>
+              </Button>
+            </div>
           </div>
           {filteredAuctions.length === 0 && (
             <div className={styles.cards}>
@@ -97,7 +167,7 @@ const AuctionListContainer = (): JSX.Element => {
             </div>
           )}
         </div>
-      </>
+      </div>
     </div>
   )
 }

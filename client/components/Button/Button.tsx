@@ -14,6 +14,8 @@ interface ButtonProps {
   variant: 'primary' | 'secondary' | 'outline' | 'link'
   icon?: ReactNode
   className?: string
+  active?: boolean
+  inlineStyles?: React.CSSProperties
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -25,6 +27,8 @@ const Button: React.FC<ButtonProps> = ({
   variant = 'primary',
   icon,
   className = '',
+  active = false,
+  inlineStyles,
 }) => {
   return (
     <motion.button
@@ -36,13 +40,15 @@ const Button: React.FC<ButtonProps> = ({
         ${styles.button} 
         ${styles[size]} 
         ${variant && styles[variant]}
-        ${className && className} 
+        ${className && styles[className]} 
         ${DM_SansFont.className}
         ${roundedButton && styles.roundedButton}
         ${smallRoundedButton && styles.smallRoundedButton}
+        ${active && styles.active}
       `}
+      style={inlineStyles && inlineStyles}
     >
-      {icon && <span className={styles.icon}>{icon}</span>}
+      {icon && <div>{icon}</div>}
       {children}
     </motion.button>
   )

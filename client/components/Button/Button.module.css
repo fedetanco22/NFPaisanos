@@ -7,6 +7,9 @@
   gap: 12px;
   color: var(--color-white);
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .xs {
@@ -69,4 +72,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.active {
+  background-color: var(--color-white);
+  color: var(--color-gray);
+  min-width: 80px;
+  height: 28px;
+}
+
+.active:hover {
+  background-color: var(--color-white);
+  color: var(--color-gray);
 }

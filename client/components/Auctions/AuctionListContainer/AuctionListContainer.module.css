@@ -4,12 +4,21 @@
   gap: 1rem;
 }
 
+.containerWrapper {
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-gray-light);
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
 .filterContainer {
+  width: 100%;
   display: flex;
   flex-flow: row wrap;
   gap: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--color-gray-light);
 }
 
 .filters {
@@ -25,7 +34,17 @@
   gap: 1rem;
 }
 
-.cards h3 {
+.cards .noResults {
   text-align: center;
   margin-top: 3rem;
+}
+
+.divider {
+  width: 90%;
+  height: 1px;
+  background-color: var(--color-gray-light);
+}
+
+.resetButton {
+  width: 250px;
 }

@@ -3,11 +3,15 @@ import React, { createContext, useContext, useState } from 'react'
 interface AppContextInterface {
   priceRange: number
   filterByOrder: string
+  filterByLikes?: string
+  filterByColors?: string
 }
 
 interface FilteredContextInterface {
   setPriceRange: React.Dispatch<React.SetStateAction<number>>
   setFilterByOrder: React.Dispatch<React.SetStateAction<string>>
+  setFilterByLikes?: React.Dispatch<React.SetStateAction<string>>
+  setFilterByColors?: React.Dispatch<React.SetStateAction<string>>
 }
 
 interface AppWrapperChildrenInterface {
@@ -45,17 +49,23 @@ export const AppWrapperProvider: React.FC<AppWrapperChildrenInterface> = ({
 }) => {
   const [priceRange, setPriceRange] = useState<number>(10)
   const [filterByOrder, setFilterByOrder] = useState<string>('')
+  const [filterByLikes, setFilterByLikes] = useState<string>('')
+  const [filterByColors, setFilterByColors] = useState<string>('')
 
   const memoizedData = React.useMemo<FilteredContextInterface>(() => {
     return {
       setPriceRange,
       setFilterByOrder,
+      setFilterByLikes,
+      setFilterByColors,
     }
-  }, [setPriceRange, setFilterByOrder])
+  }, [setPriceRange, setFilterByOrder, setFilterByLikes, setFilterByColors])
 
   return (
     <FilteredDataContext.Provider value={memoizedData}>
-      <AppContext.Provider value={{ priceRange, filterByOrder }}>
+      <AppContext.Provider
+        value={{ priceRange, filterByOrder, filterByLikes, filterByColors }}
+      >
         {children}
       </AppContext.Provider>
     </FilteredDataContext.Provider>

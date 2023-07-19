@@ -3,7 +3,6 @@ import Image from 'next/image'
 
 import styles from './SelectInput.module.css'
 
-import SmallRoundedImage from '@/client/components/Images/SmallRoundedImage/SmallRoundedImage'
 import ChevronDownSVG from '@/public/icons/chevron-down.svg'
 import Button from '@/client/components/Button/Button'
 
@@ -14,14 +13,18 @@ interface Option {
 
 interface CustomSelectProps {
   options: Option[]
-  filterByOrder: string
-  setFilterByOrder: React.Dispatch<React.SetStateAction<string>>
+  filterValue?: string
+  setFilter?: React.Dispatch<React.SetStateAction<string>>
+  title: string
+  nullOptionLabel?: string
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = ({
   options,
-  filterByOrder,
-  setFilterByOrder,
+  filterValue,
+  setFilter,
+  title,
+  nullOptionLabel = 'Select an option',
 }) => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -30,7 +33,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   }
 
   const handleOptionClick = (option: Option): void => {
-    setFilterByOrder(option.value)
+    setFilter && setFilter(option.value)
     setIsOpen(false)
   }
 
@@ -40,14 +43,11 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 
   return (
     <div className={styles.container}>
-      <h4>Order By</h4>
-
+      <h4>{title}</h4>
       <div className={styles.select}>
         <div className={styles.header} onClick={handleToggle}>
           <div>
-            {filterByOrder
-              ? capitalizeLetter(filterByOrder)
-              : 'Select an option'}
+            {filterValue ? capitalizeLetter(filterValue) : `${nullOptionLabel}`}
           </div>
           <div>
             <Button variant={'outline'} size={'xs'} smallRoundedButton>
