@@ -1,0 +1,20 @@
+.auctionCard {
+  padding: 12px;
+  background-color: var(--color-gray-dark);
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 256px;
+}
+
+.auctionCardImage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 0.75;
+}
+
+.auctionCardImage img {
+  border-radius: 16px;
+}

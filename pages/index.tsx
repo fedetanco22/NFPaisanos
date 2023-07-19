@@ -1,10 +1,13 @@
 import React, { Suspense } from 'react'
 
+import AuctionListContainer from '@/client/components/Auctions/AuctionListContainer/AuctionListContainer'
 import Layout from '@/client/components/Layout/Layout'
 import Spinner from '@/client/components/Spinner/Spinner'
 import { PoppinsFont } from '@/client/utils/fonts'
 
-const LazyPopularAuctions = React.lazy(() => import('@/client/components/Auctions/PopularAuctions/PopularAuctions'));
+const LazyPopularAuctions = React.lazy(
+  () => import('@/client/components/Auctions/PopularAuctions/PopularAuctions')
+)
 
 export default function Home(): JSX.Element {
   return (
@@ -22,9 +25,7 @@ export default function Home(): JSX.Element {
             <LazyPopularAuctions />
           </Suspense>
 
-          <Suspense fallback={<Spinner />}>
-            {/*! AuctionList */}
-          </Suspense>
+          <AuctionListContainer />
         </Layout>
       </div>
     </>

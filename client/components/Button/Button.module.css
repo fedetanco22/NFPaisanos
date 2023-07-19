@@ -9,6 +9,10 @@
   font-weight: 700;
 }
 
+.xs {
+  width: 80px;
+}
+
 .sm {
   width: 137px;
 }
@@ -32,7 +36,7 @@
 }
 .outline {
   background-color: transparent;
-  border: 2px solid var(--color-gray);
+  border: 2px solid var(--color-gray-light);
 }
 
 .link {
@@ -40,9 +44,29 @@
   border: none;
   width: auto;
   padding: 0;
-  color: var(--color-gray);
+  color: var(--color-gray-light);
 }
 
 .link:hover {
   color: var(--color-white);
+}
+
+.roundedButton {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.smallRoundedButton {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -7,12 +7,13 @@ const Logo = (): JSX.Element => {
   return (
     <div><Image
       src={LogoSVG}
+      placeholder="blur"
+      blurDataURL={'/icons/logo.svg'}
       alt='NFPaisanos'
       width={178}
       height={32}
-      priority={true}
-      style={{ width: '100%', height: 'auto' }}
-    /></div>
+    />
+    </div>
   )
 }
 

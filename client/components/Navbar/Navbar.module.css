@@ -14,13 +14,13 @@
 
 .logo {
   padding-right: 2rem;
-  border-right: 2px solid var(--color-gray-light);
+  border-right: 2px solid var(--color-gray);
 }
 
 .link {
   padding: 0 1rem;
   margin-left: 1rem;
-  color: var(--color-gray);
+  color: var(--color-gray-light);
   font-size: 14px;
   font-weight: 700;
   line-height: 16px;

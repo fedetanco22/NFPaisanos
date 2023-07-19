@@ -9,14 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.0",
     "@types/react-dom": "18.2.6",
     "axios": "^1.4.0",
     "framer-motion": "^10.12.18",
+    "lodash.debounce": "^4.0.8",
     "next": "13.4.9",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-select": "^5.7.4"
   },
   "devDependencies": {
+    "@types/lodash.debounce": "^4.0.7",
     "@types/node": "^20.4.1",
     "@types/react": "^18.2.14",
     "@typescript-eslint/eslint-plugin": "^5.62.0",

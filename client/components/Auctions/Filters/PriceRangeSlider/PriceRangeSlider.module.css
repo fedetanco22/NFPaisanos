@@ -1,0 +1,43 @@
+.container {
+  width: 90%;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-gray-light);
+}
+
+.container h4 {
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 12px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: var(--color-gray-light);
+}
+
+.thumb {
+  border: 3px solid white;
+}
+
+.valueLabel {
+  width: 49px;
+  height: 28px;
+  padding: 4px 8px 4px 8px;
+  border-radius: 8px;
+  gap: 10px;
+  background-color: var(--color-white);
+  color: #23262f;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.ranges {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ranges span {
+  font-size: 14px;
+  line-height: 24px;
+  color: var(--color-white);
+}
