@@ -6,29 +6,28 @@ import Logo from '../Logo/Logo'
 
 import styles from './Navbar.module.css'
 
-import { PoppinsFont } from '@/client/utils/fonts'
-
-
 export default function Navbar(): JSX.Element {
   return (
     <nav className={`${styles.navbar}`}>
       <div className={styles.linkList}>
-        <Link href={'/'} className={styles.logo}>
-          <Button variant={'link'} size={'md'}><Logo /></Button>
+        <Link href={'/'} className={styles.logo} data-testid="logo-link">
+          <Button variant={'link'} size={'md'}>
+            <Logo />
+          </Button>
         </Link>
         <Link href={'/'} className={styles.link}>
-          <Button variant={'link'} size={'sm'}>Discover</Button>
+          <Button variant={'link'} size={'sm'}>
+            Discover
+          </Button>
         </Link>
         <Link href={'/'} className={styles.link}>
-          <Button variant={'link'} size={'fullWidth'}>What we do</Button>
+          <Button variant={'link'} size={'fullWidth'}>
+            What we do
+          </Button>
         </Link>
       </div>
       <div className={styles.button}>
-        <Button
-          variant={'outline'}
-          size={'sm'}
-          onClick={(): void => { console.log('Button clicked') }}
-        >
+        <Button variant={'outline'} size={'sm'}>
           Connect Wallet
         </Button>
       </div>

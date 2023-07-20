@@ -2,13 +2,13 @@ import React, { FC } from 'react'
 import Head from 'next/head'
 
 interface SEOProps {
-  title: string
-  description: string
-  keywords: string
+  title?: string
+  description?: string
+  keywords?: string
 }
 
 const SEO: FC<SEOProps> = ({ title, description, keywords }) => {
-  const metaDescription = description || 'some default description'
+  const metaDescription = description || 'Some default description'
   const defaultTitle = title || 'Paisanos Challenge'
   const defaultKeywords = keywords || 'Marketplace, NFT, more keywords'
 
@@ -29,7 +29,6 @@ const SEO: FC<SEOProps> = ({ title, description, keywords }) => {
       <link rel="icon" href="/favicon.ico" />
     </Head>
   )
-};
+}
 
-export default SEO;
-
+export default SEO
