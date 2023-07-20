@@ -17,7 +17,7 @@ import {
   useAppContextState,
   useSetFilteredDataContext,
 } from '@/client/utils/context/useAppContext'
-import XSVG from '@/public/icons/x.svg'
+import XSVG from '@/public/icons/X.svg'
 
 const orderByOptions = [
   { value: 'newest', label: 'Newest' },

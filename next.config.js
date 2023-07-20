@@ -10,11 +10,6 @@ const nextConfig = {
   images: {
     domains: ['images.unsplash.com', 'res.cloudinary.com'],
   },
-  experimental: {
-    images: {
-      allowFutureImage: true,
-    },
-  },
 }
 
 module.exports = nextConfig
