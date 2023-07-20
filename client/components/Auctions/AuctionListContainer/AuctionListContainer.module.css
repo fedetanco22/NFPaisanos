@@ -48,3 +48,11 @@
 .resetButton {
   width: 250px;
 }
+
+.loadMore {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}

@@ -18,6 +18,7 @@ import {
   useSetFilteredDataContext,
 } from '@/client/utils/context/useAppContext'
 import XSVG from '@/public/icons/X.svg'
+import LoadingSVG from '@/public/icons/loading.svg'
 
 const orderByOptions = [
   { value: 'newest', label: 'Newest' },
@@ -39,6 +40,8 @@ const colorsOptions = [
 
 const AuctionListContainer = (): JSX.Element => {
   const [auctions, setAuctions] = useState<NFPaisanos[]>([])
+  const [showMore, setShowMore] = useState(6)
+  const [isLoading, setIsLoading] = useState(false)
   const { priceRange, filterByOrder, filterByLikes, filterByColors } =
     useAppContextState()
   const {
@@ -58,7 +61,7 @@ const AuctionListContainer = (): JSX.Element => {
     }
   }
 
-  const debouncedFetchData = debounce(fetchData, 3000)
+  const debouncedFetchData = debounce(fetchData, 300)
 
   useEffect(() => {
     debouncedFetchData()
@@ -75,6 +78,11 @@ const AuctionListContainer = (): JSX.Element => {
     setFilterByOrder && setFilterByOrder('')
     setFilterByLikes && setFilterByLikes('')
     setFilterByColors && setFilterByColors('')
+  }
+
+  const handleLoadMore = (): void => {
+    setShowMore((prevShowMore: number) => prevShowMore + 6)
+    setIsLoading(true)
   }
 
   useEffect(() => {
@@ -100,9 +108,12 @@ const AuctionListContainer = (): JSX.Element => {
 
       const orderedAuctions = filteredByPrice.sort(orderBy[filterByOrder])
 
-      setFilteredAuctions(orderedAuctions)
+      const startIndex = 0
+      const endIndex = Math.min(showMore, orderedAuctions.length)
+
+      setFilteredAuctions(orderedAuctions.slice(startIndex, endIndex))
     }
-  }, [auctions, priceRange, filterByOrder])
+  }, [auctions, priceRange, filterByOrder, showMore])
 
   return (
     <div className={styles.container}>
@@ -162,9 +173,30 @@ const AuctionListContainer = (): JSX.Element => {
             </div>
           )}
           {filteredAuctions.length > 0 && (
-            <div className={styles.cards}>
-              <AuctionList auctions={filteredAuctions} />
-            </div>
+            <>
+              <div className={styles.cards}>
+                <AuctionList auctions={filteredAuctions} />
+                {!isLoading && filteredAuctions.length > 0 && (
+                  <div className={styles.loadMore}>
+                    {filteredAuctions.length >= showMore && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleLoadMore}
+                        icon={
+                          (!isLoading && (
+                            <Image src={LoadingSVG} alt={'loading'} />
+                          )) ||
+                          null
+                        }
+                      >
+                        Load More
+                      </Button>
+                    )}
+                  </div>
+                )}
+              </div>
+            </>
           )}
         </div>
       </div>

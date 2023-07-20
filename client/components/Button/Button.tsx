@@ -48,7 +48,7 @@ const Button: React.FC<ButtonProps> = ({
       `}
       style={inlineStyles && inlineStyles}
     >
-      {icon && <div>{icon}</div>}
+      {icon && icon}
       {children}
     </motion.button>
   )
