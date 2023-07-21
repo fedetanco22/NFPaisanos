@@ -1,4 +1,7 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
+
+import { getPopularAuctions, getAuctions } from '@/server/api/services'
+import NFPaisanos from '@/types/NFPaisanos'
 
 interface AppContextInterface {
   priceRange: number
@@ -14,11 +17,20 @@ interface FilteredContextInterface {
   setFilterByColors?: React.Dispatch<React.SetStateAction<string>>
 }
 
+interface DataContextInterface {
+  popularAuctionsData: NFPaisanos[]
+  auctionsData: NFPaisanos[]
+  loading: boolean
+}
+
 interface AppWrapperChildrenInterface {
   children: React.ReactNode
 }
 
 const AppContext = createContext<AppContextInterface | null>(null)
+const FilteredDataContext = createContext<FilteredContextInterface | null>(null)
+const DataContext = createContext<DataContextInterface | null>(null)
+
 export const useAppContextState = (): AppContextInterface => {
   const context = useContext(AppContext)
 
@@ -31,7 +43,6 @@ export const useAppContextState = (): AppContextInterface => {
   return context
 }
 
-const FilteredDataContext = createContext<FilteredContextInterface | null>(null)
 export const useSetFilteredDataContext = (): FilteredContextInterface => {
   const context = useContext(FilteredDataContext)
 
@@ -44,6 +55,16 @@ export const useSetFilteredDataContext = (): FilteredContextInterface => {
   return context
 }
 
+export const useData = (): DataContextInterface => {
+  const context = useContext(DataContext)
+
+  if (!context) {
+    throw new Error('useData must be used within an AppWrapperProvider')
+  }
+
+  return context
+}
+
 export const AppWrapperProvider: React.FC<AppWrapperChildrenInterface> = ({
   children,
 }) => {
@@ -51,22 +72,69 @@ export const AppWrapperProvider: React.FC<AppWrapperChildrenInterface> = ({
   const [filterByOrder, setFilterByOrder] = useState<string>('')
   const [filterByLikes, setFilterByLikes] = useState<string>('')
   const [filterByColors, setFilterByColors] = useState<string>('')
+  const [auctionsData, setAuctionsData] = useState<NFPaisanos[]>([])
+  const [popularAuctionsData, setPopularAuctionsData] = useState<NFPaisanos[]>(
+    []
+  )
+  const [loading, setLoading] = useState<boolean>(true)
 
-  const memoizedData = React.useMemo<FilteredContextInterface>(() => {
-    return {
-      setPriceRange,
-      setFilterByOrder,
-      setFilterByLikes,
-      setFilterByColors,
+  const fetchPopularAuctionsData = async (): Promise<void> => {
+    try {
+      const data = await getPopularAuctions()
+      setPopularAuctionsData(data)
+    } catch (error) {
+      // Handle error
+      throw new Error(error as string)
     }
-  }, [setPriceRange, setFilterByOrder, setFilterByLikes, setFilterByColors])
+  }
+
+  const fetchAuctionsData = async (): Promise<void> => {
+    try {
+      const data = await getAuctions()
+      setAuctionsData(data)
+    } catch (error) {
+      // Handle error
+      throw new Error(error as string)
+    }
+  }
+
+  useEffect(() => {
+    Promise.all([fetchPopularAuctionsData(), fetchAuctionsData()])
+      .then(() => setLoading(false))
+      .catch(() => setLoading(false))
+  }, [])
+
+  const filteredDataContextValue =
+    React.useMemo<FilteredContextInterface>(() => {
+      return {
+        setPriceRange,
+        setFilterByOrder,
+        setFilterByLikes,
+        setFilterByColors,
+      }
+    }, [setPriceRange, setFilterByOrder, setFilterByLikes, setFilterByColors])
+
+  const dataContextValue = React.useMemo<DataContextInterface>(() => {
+    return {
+      popularAuctionsData,
+      auctionsData,
+      loading,
+    }
+  }, [popularAuctionsData, auctionsData, loading])
 
   return (
-    <FilteredDataContext.Provider value={memoizedData}>
+    <FilteredDataContext.Provider value={filteredDataContextValue}>
       <AppContext.Provider
-        value={{ priceRange, filterByOrder, filterByLikes, filterByColors }}
+        value={{
+          priceRange,
+          filterByOrder,
+          filterByLikes,
+          filterByColors,
+        }}
       >
-        {children}
+        <DataContext.Provider value={dataContextValue}>
+          {children}
+        </DataContext.Provider>
       </AppContext.Provider>
     </FilteredDataContext.Provider>
   )

@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useState } from 'react'
 import Image from 'next/image'
 
 import Spinner from '../../Spinner/Spinner'
@@ -9,46 +9,32 @@ import styles from './PopularAuctions.module.css'
 import ImagePanel from './ImagePanel/ImagePanel'
 import Bid from './Bid/Bid'
 
-import { getPopularAuctions } from '@/server/api/services'
-import NFPaisanos from '@/types/NFPaisanos'
 import { DM_SansFont, PoppinsFont } from '@/client/utils/fonts'
 import StopSVGIcon from '@/public/icons/stop.svg'
 import LeftArrowSVGIcon from '@/public/icons/arrow-left.svg'
 import RightArrowSVGIcon from '@/public/icons/arrow-right.svg'
+import { useData } from '@/client/utils/context/useAppContext'
 
 function PopularAuctions(): JSX.Element {
-  const [popularAuctions, setPopularAuctions] = useState([] as NFPaisanos[])
   const [currentPage, setCurrentPage] = useState(0)
-  const [loading, setLoading] = useState(true)
+  const { popularAuctionsData } = useData()
 
-  const fetchData = async (): Promise<void> => {
-    const data = await getPopularAuctions()
-    setPopularAuctions(data)
-    setLoading(false)
-  }
-
-  useEffect(() => {
-    fetchData()
-  }, [])
-
-  const AuctionDisplayed = popularAuctions[currentPage]
+  const AuctionDisplayed = popularAuctionsData[currentPage]
 
   const handlePreviousAuction = (currentPage: number): void => {
     if (currentPage === 0) {
-      setCurrentPage(popularAuctions.length - 1)
+      setCurrentPage(popularAuctionsData.length - 1)
     } else {
       setCurrentPage(currentPage - 1)
     }
   }
   const handleNextAuction = (currentPage: number): void => {
-    if (currentPage === popularAuctions.length - 1) {
+    if (currentPage === popularAuctionsData.length - 1) {
       setCurrentPage(0)
     } else {
       setCurrentPage(currentPage + 1)
     }
   }
-
-  if (loading) return <Spinner />
 
   return (
     <div className={styles.grid}>

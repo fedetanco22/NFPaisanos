@@ -452,7 +452,7 @@ export const getAuctions = async (): Promise<NFPaisanos[]> => {
           ],
         },
       ])
-    }, 2000)
+    }, 1000)
   })
 }
 
@@ -580,6 +580,6 @@ export const getPopularAuctions = async (): Promise<NFPaisanos[]> => {
           ],
         },
       ])
-    }, 2000)
+    }, 1000)
   })
 }
