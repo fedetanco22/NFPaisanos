@@ -21,6 +21,8 @@ export default function Home(): JSX.Element {
           description="Generated magic by Federico Tanco"
           keywords="NFTs, Challenge, Federico Tanco, paisanos, eth, usd, etherium, dolar, nfpaisanos, crypto, crypto marketplace "
         >
+          {/* The conditional will disapear when data fetching from API is fixed, 
+          just Suspense will be working */}
           {loading ? (
             <Spinner />
           ) : (

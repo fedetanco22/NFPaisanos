@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
+import debounce from 'lodash.debounce'
 
 import { getPopularAuctions, getAuctions } from '@/server/api/services'
 import NFPaisanos from '@/types/NFPaisanos'
@@ -103,6 +104,12 @@ export const AppWrapperProvider: React.FC<AppWrapperChildrenInterface> = ({
       .then(() => setLoading(false))
       .catch(() => setLoading(false))
   }, [])
+
+  const debouncedFetchData = debounce(fetchAuctionsData, 300)
+
+  useEffect(() => {
+    debouncedFetchData()
+  }, [priceRange, filterByOrder, filterByLikes, filterByColors])
 
   const filteredDataContextValue =
     React.useMemo<FilteredContextInterface>(() => {
