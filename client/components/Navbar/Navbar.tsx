@@ -6,7 +6,12 @@ import Logo from '../Logo/Logo'
 
 import styles from './Navbar.module.css'
 
+import { useAppContextState } from '@/client/utils/context/useAppContext'
+
 export default function Navbar(): JSX.Element {
+  const { width } = useAppContextState()
+  // console.log('🚀 ~ file: Navbar.tsx:13 ~ Navbar ~ width:', width)
+
   return (
     <nav className={`${styles.navbar}`}>
       <div className={styles.linkList}>

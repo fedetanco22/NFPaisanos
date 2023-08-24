@@ -39,12 +39,14 @@ const colorsOptions = [
 const AuctionListContainer = (): JSX.Element => {
   const { filterByOrder, filterByLikes, filterByColors, priceRange } =
     useAppContextState()
+
   const {
     setFilterByOrder,
     setPriceRange,
     setFilterByColors,
     setFilterByLikes,
   } = useSetFilteredDataContext()
+  
   const {
     memoizedFilteredAuctions,
     handleResetFilters,

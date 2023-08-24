@@ -11,7 +11,12 @@ interface LayoutProps {
   keywords: string
 }
 
-const Layout: React.FC<LayoutProps> = ({ children, title, description, keywords }) => {
+const Layout: React.FC<LayoutProps> = ({
+  children,
+  title,
+  description,
+  keywords,
+}) => {
   return (
     <div>
       <SEO title={title} description={description} keywords={keywords} />

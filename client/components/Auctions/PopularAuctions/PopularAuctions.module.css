@@ -1,12 +1,25 @@
 .grid {
   display: flex;
+  flex-flow: column nowrap;
   justify-content: space-between;
   grid-gap: 1rem;
   margin: 7.75rem 0;
 }
+@media screen and (min-width: 556px) {
+  .grid {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+}
 
 .panels {
   height: 100%;
+  padding: 0 2rem;
+}
+@media screen and (min-width: 556px) {
+  .panels {
+    padding: 0rem;
+  }
 }
 
 .panels img {

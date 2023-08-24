@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import debounce from 'lodash.debounce'
 
+import { useWindowDimensions } from '../hooks/useWindowDimensions'
+
 import { getPopularAuctions, getAuctions } from '@/server/api/services'
 import NFPaisanos from '@/types/NFPaisanos'
 
@@ -9,6 +11,7 @@ interface AppContextInterface {
   filterByOrder: string
   filterByLikes?: string
   filterByColors?: string
+  width?: number
 }
 
 interface FilteredContextInterface {
@@ -78,13 +81,13 @@ export const AppWrapperProvider: React.FC<AppWrapperChildrenInterface> = ({
     []
   )
   const [loading, setLoading] = useState<boolean>(true)
+  const { width } = useWindowDimensions()
 
   const fetchPopularAuctionsData = async (): Promise<void> => {
     try {
       const data = await getPopularAuctions()
       setPopularAuctionsData(data)
     } catch (error) {
-      // Handle error
       throw new Error(error as string)
     }
   }
@@ -94,7 +97,6 @@ export const AppWrapperProvider: React.FC<AppWrapperChildrenInterface> = ({
       const data = await getAuctions()
       setAuctionsData(data)
     } catch (error) {
-      // Handle error
       throw new Error(error as string)
     }
   }
@@ -137,6 +139,7 @@ export const AppWrapperProvider: React.FC<AppWrapperChildrenInterface> = ({
           filterByOrder,
           filterByLikes,
           filterByColors,
+          width,
         }}
       >
         <DataContext.Provider value={dataContextValue}>
