@@ -25,8 +25,8 @@ const overlayVariants: Variants = {
   visible: {
     opacity: 1,
     borderRadius: '16px',
-    backgroundColor: 'rgba(255, 255, 255, 1)',
-    transition: { duration: 1.5 },
+    backgroundColor: 'rgba(255, 255, 255, 0.6)',
+    transition: { duration: 0.4 },
   },
 }
 
